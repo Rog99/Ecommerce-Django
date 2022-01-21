@@ -1,0 +1,20 @@
+{% extends '../../index.html' %}
+
+{% block content %}
+
+{% load static %}
+<link rel="stylesheet" href="{% static 'styles/inspiration.css' %}"/>
+
+<section id="books-list">
+  {% for card in cards %}
+  <div class="card">
+    <img src="{% static 'images/' %}{{card.imagePath}}" alt="Wings Of Fire" class="book-img">
+    <h2 style="margin: 10px 0px 5px 0px">{{ card.bookName }}</h2>
+    <p class="price" style="margin: 5px 0px 10px 0px">Rs.{{ card.price }}</p>
+    <p style="margin: 5px">{{ card.bookSummary }}</p>
+    <button class="mb-2">Add to Cart</button>
+  </div>
+  {% endfor %}
+</section>
+
+{% endblock %}

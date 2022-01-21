@@ -1,0 +1,45 @@
+{% extends '../auth.html' %}
+
+{% block content %}
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'styles/sell.css' %}"/>
+
+<form method="POST">
+    <div class="container form-container my-4">
+        <h1>Product Details</h1>
+        <hr>
+        <div class="d-flex align-items-center m-2">
+            <label for="product-name"><b>Product Name<span style="color:red;">*</span> :</b></label>
+            <input type="text" placeholder="Enter Product Name" name="product-name" class="product-field" required>
+        </div>
+        <div class="d-flex align-items-center m-2">
+            <label for="product-type">Choose your product<span style="color:red;">*</span> :</label>
+            <select name="product-type" id="products">
+              <option value="books">Books</option>
+              <option value="gym-equipments">Gym Equipments</option>
+              <option value="sports">Sports accessories</option>
+              <option value="electronics">Electronics</option>
+            </select>
+        </div>
+        <div class="d-flex align-items-center m-2">
+            <label for="product-img"><b>Product image<span style="color:red;">*</span> :</b></label>
+            <input type="file" name="product-img" class="input-field" required accept="image/*">
+        </div>
+        <div class="d-flex align-items-center m-2">
+            <label for="price"><b>Price<span style="color:red;">*</span> :</b></label>
+            <input type="number" placeholder="Enter price" name="price" class="input-field" required>
+        </div>
+        <div class="d-flex align-items-center m-2">
+            <label for="description"><b>Description<span style="color:red;">*</span> :</b></label>
+            <textarea  style="resize: none;"></textarea>
+        </div>
+        <div class="d-flex align-items-center m-2">
+            <label for="location"><b>Location<span style="color:red;">*</span> :</b></label>
+            <input type="text" placeholder="Enter location" name="location" class="input-field" required>
+        </div>
+        <hr>
+        <button type="submit" class="registerbtn m-2"><strong>Submit</strong></button>
+    </div>
+</form>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends '../../index.html' %}
+
+{% block content %}
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'styles/defence.css' %}"/>
+
+
+<div class="defence-cards" style="display:grid; grid-template-columns: repeat(3, 1fr)">
+{% for card in cards %}
+<div class="card">
+  <img src="{% static 'images/' %}{{card.imagePath}}" alt="NDA Pathfinder" style="width:100%">
+  <h1>{{ card.bookName }}</h1>
+  <p class="price">RS.{{ card.price }}</p>
+  <p>{{ card.bookSummary }}</p>
+  <p><button>Add to Cart</button></p>
+</div>
+{% endfor %}
+</div>
+
+{% endblock %}

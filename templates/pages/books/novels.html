@@ -1,0 +1,22 @@
+<!--Changing the number in the column_# class changes the number of columns-->
+{% extends '../../index.html' %}
+
+{% block content %}
+{% load static %}
+
+	<link rel="stylesheet" href="{% static 'styles/novels.css' %}"/>
+
+	<div id="columns" class="columns_4">
+
+	{% for card in cards %}
+	<figure>
+		<img src="{% static 'images/' %}{{card.imagePath}}">
+		<figcaption>{{card.bookName}}</figcaption>
+		<span class="price">Rs.{{card.price}}</span>
+		<a class="button" href="FFA.html">Buy Now</a>
+	</figure>
+	{% endfor %}
+
+	</div>
+
+{% endblock %}
