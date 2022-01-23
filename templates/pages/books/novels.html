@@ -4,19 +4,17 @@
 {% block content %}
 {% load static %}
 
-	<link rel="stylesheet" href="{% static 'styles/novels.css' %}"/>
-
-	<div id="columns" class="columns_4">
-
+<link rel="stylesheet" href="{% static 'styles/inspiration.css' %}"/>
+<section id="books-list">
 	{% for card in cards %}
-	<figure>
-		<img src="{% static 'images/' %}{{card.imagePath}}">
-		<figcaption>{{card.bookName}}</figcaption>
-		<span class="price">Rs.{{card.price}}</span>
-		<a class="button" href="FFA.html">Buy Now</a>
-	</figure>
-	{% endfor %}
-
+	<div class="card">
+		<img src="{% static '/images/' %}{{ card.product_path }}" alt="Wings Of Fire" class="book-img">
+		<h3 style="margin: 10px 0px 5px 0px">{{ card.product_name | truncatechars:20 }}</h3>
+		<p class="price" style="margin: 5px 0px 10px 0px">₹ {{ card.price }}</p>
+		<p style="margin: 5px; text-align: start">{{ card.description | truncatechars:100 }}</p>
+		<button class="mb-2">Add to Cart</button>
 	</div>
+	{% endfor %}
+</section>
 
 {% endblock %}

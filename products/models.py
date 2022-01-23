@@ -1,7 +1,10 @@
 from django.db import models
-from authentication.models import CustomUser
+from django.forms import ModelForm
+from django.core.files.storage import FileSystemStorage
 
 # Create your models here.
+
+fs = FileSystemStorage(location='/assets/images')
 
 
 class ProductDetails(models.Model):
@@ -20,6 +23,12 @@ class ProductDetails(models.Model):
     user = models.ForeignKey('authentication.CustomUser', on_delete=models.SET_NULL, blank=True, null=True)
 
 
+class ProductForm(ModelForm):
+    class Meta:
+        model = ProductDetails
+        fields = ['product_name', 'product_path', 'product_type', 'price', 'description', 'location', 'user']
+
+
 class ProductTags(models.Model):
     TAGS = [
         ('MB', 'Motivational Books'),
@@ -27,5 +36,20 @@ class ProductTags(models.Model):
         ('CB', 'College Level Books'),
         ('NO', 'Novels')
     ]
-    product_id = models.ForeignKey('ProductDetails', on_delete=models.SET_NULL, blank=True, null=True)
-    tag = models.CharField(max_length=2, null=False, blank=False)
+    product = models.ForeignKey('ProductDetails', on_delete=models.SET_NULL, blank=True, null=True)
+    tag = models.CharField(max_length=2, null=False, blank=False, choices=TAGS)
+
+    #returns a RawQuesrySet instance based on the book tag
+    @classmethod
+    def get_books_by_tags(cls, tag: str):
+        return cls.objects.raw("""
+            SELECT 
+            products_productdetails.id,
+            products_productdetails.product_name,
+            products_productdetails.price,
+            products_productdetails.description,
+            products_productdetails.product_path
+            FROM products_productdetails 
+            RIGHT JOIN products_producttags ON products_productdetails.id=products_producttags.product_id 
+            WHERE products_producttags.tag='{}'
+       """.format(tag))

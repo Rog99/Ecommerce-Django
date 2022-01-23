@@ -5,26 +5,37 @@
 
 <link rel="stylesheet" href="{% static 'styles/sell.css' %}"/>
 
-<form method="POST">
+<form method="POST" action="/sell" enctype="multipart/form-data">
+    {% csrf_token %}
     <div class="container form-container my-4">
         <h1>Product Details</h1>
         <hr>
         <div class="d-flex align-items-center m-2">
-            <label for="product-name"><b>Product Name<span style="color:red;">*</span> :</b></label>
-            <input type="text" placeholder="Enter Product Name" name="product-name" class="product-field" required>
+            <label for="product_name"><b>Product Name<span style="color:red;">*</span> :</b></label>
+            <input type="text" placeholder="Enter Product Name" name="product_name" class="product-field" required>
         </div>
         <div class="d-flex align-items-center m-2">
-            <label for="product-type">Choose your product<span style="color:red;">*</span> :</label>
-            <select name="product-type" id="products">
-              <option value="books">Books</option>
-              <option value="gym-equipments">Gym Equipments</option>
-              <option value="sports">Sports accessories</option>
-              <option value="electronics">Electronics</option>
+            <label for="product_type">Choose your product<span style="color:red;">*</span> :</label>
+            <select name="product_type" id="products" required>
+              <option value="BK">Books</option>
+              <option value="GE">Gym Equipments</option>
+              <option value="SA">Sports accessories</option>
+              <option value="EE">Electronics</option>
             </select>
         </div>
+        <div class="d-flex align-items-center m-2" id="book_tags">
+            <label for="book_type">Choose Book Type :</label>
+            <select name="book_type">
+                <option value="MB">Motivational Books</option>
+                <option value="DB">Defence Books</option>
+                <option value="CB">College Level books</option>
+                <option value="NO">Novels</option>
+            </select>
+            <span style="color: #cccc00; margin: 0px 10px; font-weight: 600">*Only valid for product type Books</span>
+        </div>
         <div class="d-flex align-items-center m-2">
-            <label for="product-img"><b>Product image<span style="color:red;">*</span> :</b></label>
-            <input type="file" name="product-img" class="input-field" required accept="image/*">
+            <label for="product_path"><b>Product image<span style="color:red;">*</span> :</b></label>
+            <input type="file" name="product_path" class="input-field" required accept="image/*">
         </div>
         <div class="d-flex align-items-center m-2">
             <label for="price"><b>Price<span style="color:red;">*</span> :</b></label>
@@ -32,7 +43,7 @@
         </div>
         <div class="d-flex align-items-center m-2">
             <label for="description"><b>Description<span style="color:red;">*</span> :</b></label>
-            <textarea  style="resize: none;"></textarea>
+            <textarea  style="resize: none;" name="description"></textarea>
         </div>
         <div class="d-flex align-items-center m-2">
             <label for="location"><b>Location<span style="color:red;">*</span> :</b></label>
@@ -42,4 +53,6 @@
         <button type="submit" class="registerbtn m-2"><strong>Submit</strong></button>
     </div>
 </form>
+
+</script>
 {% endblock %}

@@ -1,5 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic import TemplateView
+from .models import ProductTags
 
 # Create your views here.
 
@@ -26,12 +27,8 @@ class ElectronicsPage(TemplateView):
 
 class MotivationalBooks(TemplateView):
     def get(self, request):
-        card1 = {
-            "bookName": "Inspirational Books",
-            "price": 120,
-            "bookSummary": "One fo the highest selling books written by a man with zero haters",
-            "imagePath": "book.jpg"
-        }
+        book_tags = ProductTags.get_books_by_tags('MB')
+
         card2 = {
             "bookName": "Inspirational Books",
             "price": 100,
@@ -51,7 +48,7 @@ class MotivationalBooks(TemplateView):
             "imagePath": "7habits.jpg"
         }
         return render(request, "pages/books/inspirational.html", {
-            "cards": [card1, card2, card3, card4]
+            "cards": book_tags
         })
 
 
@@ -69,9 +66,30 @@ class DefenceBooks(TemplateView):
             "bookSummary": "Best books for CDS aspirants. 8000+ MCQS practise questions.",
             "imagePath": "Bookpathfinder.jpg"
         }
+        book_tags = ProductTags.get_books_by_tags('DB')
         return render(request, "pages/books/defence.html", {
-            "cards": [card1, card2]
+            "cards": book_tags
         })
+
+
+class BookTags(TemplateView):
+    def get(self, request, tag):
+        if tag == "inspirational" or tag == "defence" or tag == "novels" or tag == "college":
+            if tag == "inspirational":
+                book_tags = ProductTags.get_books_by_tags('MB')
+            elif tag == "defence":
+                book_tags = ProductTags.get_books_by_tags('DB')
+            elif tag == "novels":
+                book_tags = ProductTags.get_books_by_tags('NO')
+            else:
+                book_tags = ProductTags.get_books_by_tags('CB')
+
+            return render(request, "pages/books/defence.html", {
+                "cards": book_tags
+            })
+
+        else:
+            redirect('/books')
 
 
 class Novels(TemplateView):
@@ -91,11 +109,12 @@ class Novels(TemplateView):
             "price": 44,
             "imagePath": "novel3.jpg"
         }
+        book_tags = ProductTags.get_books_by_tags('NO')
         book4 = {
             "bookName": "Red Flowy",
             "price": 44,
             "imagePath": "novel4.jpg"
         }
         return render(request, 'pages/books/novels.html', {
-            "cards": [book1, book2, book3, book4]
+            "cards": book_tags
         })

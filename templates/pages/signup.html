@@ -40,10 +40,17 @@
     </div>
     <hr>
     <p>By creating an account you agree to our <a href="#">Terms & Privacy</a>.</p>
-    <button type="submit" class="registerbtn" onclick="handleSubmit(e)"><strong>Register</strong></button>
+    <button type="submit" class="registerbtn"><strong>Register</strong></button>
   </div>
   <div class="container signin">
-    <p>Already have an account? <a href="#">Sign in</a>.</p>
+    <p>Already have an account? <a href="/signin">Sign in</a>.</p>
   </div>
 </form>
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li style="color: red;" {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
 {% endblock %}

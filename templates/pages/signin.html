@@ -1,0 +1,36 @@
+{% extends '../auth.html' %}
+
+{% block content %}
+
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'styles/signup.css' %}"/>
+
+<form method="POST" action="/signin">
+    {% csrf_token %}
+    <div class="container form-container my-3">
+        <h1>Sign in to your account</h1>
+<!--        <p>Please fill in the details to create an account with us.</p>-->
+        <hr>
+        <div>
+            <label for="email"><b>Enter Email :</b></label>
+            <input type="email" placeholder="Enter Email" name="email" class="input-field" required>
+        </div>
+        <div>
+            <label for="password"><b>Password :</b></label>
+            <input type="password" placeholder="Enter Password" name="password" class="input-field" required>
+        </div>
+        <hr>
+        <button type="submit" class="registerbtn"><strong>Signin</strong></button>
+    </div>
+</form>
+
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+{% endblock %}

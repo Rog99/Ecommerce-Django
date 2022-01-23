@@ -28,20 +28,33 @@
             <li><a class="dropdown-item" href="electronics">Electronics</a></li>
           </ul>
         </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
-            aria-expanded="false">
-            Login
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="signup">Sign Up</a></li>
-            <li><a class="dropdown-item" href="signin">Sign In</a></li>
-           </ul>
-           <li class="nav-item">
-            <a class="nav-link" href="sell">Sell Product</a>
-          </li>
+        {% if user.full_name %}
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+               aria-expanded="false">
+              {{ user.full_name }}
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="#">Logout</a></li>
+            </ul>
+            <li class="nav-item">
+              <a class="nav-link" href="sell">Sell Product</a>
+            </li>
+        {% endif %}
 
-        </li>
+        {% if not user.full_name %}
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              Login
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="signup">Sign Up</a></li>
+              <li><a class="dropdown-item" href="signin">Sign In</a></li>
+            </ul>
+
+          </li>
+        {% endif %}
       </ul>
 
       <form class="d-flex">

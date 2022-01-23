@@ -8,8 +8,10 @@
     border: 2px solid #000;
     padding: 10px;
 }
-/* C:\Users\20000062\AppData\Local\Programs\Git */
 
+.messages > .error{
+    color: red;
+}
 .signin{
     margin: 0px 30px;
 }
