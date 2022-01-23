@@ -3,7 +3,7 @@ from django.views.generic import TemplateView
 from django.db.utils import IntegrityError
 from .models import CustomUser
 from django.contrib import messages
-from django.contrib.auth import login
+from django.contrib.auth import login, logout
 from django.utils.decorators import method_decorator
 from products.middlewares import check_user_login
 from products.models import ProductDetails, ProductTags
@@ -58,12 +58,12 @@ class SellerPage(TemplateView):
             location=location,
             user=user
         )
-        if product_type == "BK":
-            tag = ProductTags(product=sell, tag=request.POST["book_type"])
 
         try:
+            if product_type == "BK":
+                tag = ProductTags(product=sell, tag=request.POST["book_type"])
+                tag.save()
             sell.save()
-            tag.save()
             return redirect('/')
 
         except:
@@ -125,3 +125,8 @@ class LoginPage(TemplateView):
         except CustomUser.DoesNotExist:
             messages.info(request, "User does not exist.")
             return redirect('/signin')
+
+
+def logout_view(request):
+    logout(request)
+    return redirect("/signin")

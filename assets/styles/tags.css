@@ -1,0 +1,4 @@
+#books-list{
+    display: grid;
+    grid-template-columns: repeat(3, minmax(320px, 1fr));
+}

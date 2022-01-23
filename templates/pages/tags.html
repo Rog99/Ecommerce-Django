@@ -1,19 +1,19 @@
-{% extends '../../index.html' %}
+{% extends '../index.html' %}
 
 {% block content %}
 {% load static %}
 
-<link rel="stylesheet" href="{% static 'styles/inspiration.css' %}"/>
+<link rel="stylesheet" href="{% static 'styles/card.css' %}"/>
 
 
-<section id="books-list">
+<section id="books-list" style="display:grid; grid-template-columns: repeat(3, minmax(320px, 1fr)); margin-top: 20px;">
 {% for card in cards %}
   <div class="card">
-    <img src="{% static '/images/' %}{{ card.product_path }}" alt="Wings Of Fire" class="book-img">
+    <img src="{% static '/images/' %}{{ card.product_path }}" alt="Wings Of Fire" class="item-img">
     <h3 style="margin: 10px 0px 5px 0px">{{ card.product_name | truncatechars:20 }}</h3>
     <p class="price" style="margin: 5px 0px 10px 0px">₹ {{ card.price }}</p>
     <p style="margin: 5px; text-align: start">{{ card.description | truncatechars:100 }}</p>
-    <button class="mb-2">Add to Cart</button>
+    <button class="mb-2">View Product</button>
   </div>
 {% endfor %}
 </section>
