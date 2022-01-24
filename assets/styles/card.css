@@ -17,7 +17,8 @@
   font-size: 22px;
 }
 
-.card button {
+.card a{
+  text-decoration: none;
   border: none;
   outline: 0;
   padding: 12px;
@@ -29,7 +30,7 @@
   font-size: 18px;
 }
 
-.card button:hover {
+.card a:hover {
   opacity: 0.7;
 }
 

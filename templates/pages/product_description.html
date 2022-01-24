@@ -1,0 +1,24 @@
+{% extends '../index.html' %}
+
+{% block content %}
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'styles/product_description.css' %}" />
+
+<div class="mx-4 mt-3">
+    <h2 class="product-header my-3" style="font-weight:800;">{{ details.product_name }}</h2>
+    <div class="d-flex align-items-start .justify-content-between">
+        <img class="product-image" src="{% static 'images/' %}{{ details.product_path }}" />
+        <section class="product-description p-3 mx-2">
+            <h3>Description :</h3>
+            <div class="mt-2">{{ details.description }}</div>
+            <h3 class="mt-4">Location :</h3>
+            <div class="mt-2 underline" style="text-decoration:underline; color:blue;">
+                {{ details.location }}
+            </div>
+            <a class="btn btn-primary mt-4" href="/chat/{{ details.user_id }}">Talk to seller</a>
+        </section>
+    </div>
+</div>
+
+{% endblock %}

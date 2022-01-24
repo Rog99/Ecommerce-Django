@@ -5,16 +5,16 @@
 
 <link rel="stylesheet" href="{% static 'styles/card.css' %}"/>
 
-<img src="https://source.unsplash.com/1400x400/? gym rats" class="img-fluid" alt="...">
+<img src="https://source.unsplash.com/1400x400/?{{product}}" class="img-fluid" alt="...">
 
 <section class="items-list" style="display:grid; grid-template-columns: repeat(3, minmax(320px, 1fr)); margin-top: 20px">
     {% for card in cards %}
     <div class="card">
         <img src="{% static '/images/' %}{{ card.product_path }}" alt="Wings Of Fire" class="item-img">
-        <h3 style="margin: 10px 0px 5px 0px">{{ card.product_name | truncatechars:20 }}</h3>
+        <h3 style="margin: 10px 0px 5px 0px">{{ card.product_name | truncatechars:15 }}</h3>
         <p class="price" style="margin: 5px 0px 10px 0px">₹ {{ card.price }}</p>
         <p style="margin: 5px; text-align: start">{{ card.description | truncatechars:100 }}</p>
-        <button class="mb-2">View Product</button>
+        <a class="mb-2" href="/{{product}}/{{card.id}}">View Product</a>
     </div>
     {% endfor %}
 </section>

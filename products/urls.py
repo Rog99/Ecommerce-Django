@@ -5,7 +5,6 @@ urlpatterns = [
     path('books', views.BooksInfo.as_view(), name="books-page"),
     path('books/<str:tag>', views.BookTags.as_view(), name="books-tags"),
     path('books/<str:tag>/<int:product_id>', views.BookTags.as_view(), name="books-tags"),
-    path('gym', views.GymPage.as_view(), name="gym"),
-    path('sports', views.SportsPage.as_view(), name="sports"),
-    path('electronics', views.SportsPage.as_view(), name="electronics")
+    path('<str:product>', views.ProductsPage.as_view(), name="other-products"),
+    path('<str:product>/<int:product_id>', views.ProductsDescriptionPage.as_view(), name="other-products")
 ]
