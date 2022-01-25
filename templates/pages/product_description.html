@@ -16,7 +16,11 @@
             <div class="mt-2 underline" style="text-decoration:underline; color:blue;">
                 {{ details.location }}
             </div>
-            <a class="btn btn-primary mt-4" href="/chat/{{ details.user_id }}">Talk to seller</a>
+            {% if details.user_id == user_id %}
+                <button class="btn mt-4 btn-secondary" disabled>Talk to seller</button>
+            {% else %}
+                <a class="btn btn-primary mt-4" href="/chat/{{ details.user_id }}">Talk to seller</a>
+            {% endif %}
         </section>
     </div>
 </div>

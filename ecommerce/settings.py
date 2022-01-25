@@ -77,6 +77,11 @@ TEMPLATES = [
 
 # WSGI_APPLICATION = 'ecommerce.wsgi.application'
 ASGI_APPLICATION = 'ecommerce.asgi.application'
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels.layers.InMemoryChannelLayer'
+    }
+}
 
 
 # Database

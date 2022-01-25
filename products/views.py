@@ -9,6 +9,13 @@ products_routes = {
     "electronics": "EE"
 }
 
+book_tags = {
+    "novels": "NO",
+    "inspirational": "MB",
+    "defence": "DB",
+    "college": "CB"
+}
+
 
 class BooksInfo(TemplateView):
     def get(self, request):
@@ -59,7 +66,41 @@ class ProductsDescriptionPage(TemplateView):
                 return redirect("/{}".format(product))
             else:
                 return render(request, "pages/product_description.html", {
-                    "details": details
+                    "details": details,
+                    "user_id": request.user.id
                 })
         except KeyError:
             return redirect("/{}".format(product))
+
+
+class BooksDescriptionPage(TemplateView):
+    def get(self, request, tag, product_id):
+        try:
+            tag = tag.split('"')[0]
+            product_id = product_id.split('"')[0]
+            details = ProductDetails.objects.raw("""
+                SELECT 
+                products_productdetails.id AS id,
+                products_productdetails.description AS description,
+                products_productdetails.product_name,
+                products_productdetails.product_path,
+                products_productdetails.price,
+                products_productdetails.location,
+                products_productdetails.user_id
+                FROM products_productdetails
+                RIGHT JOIN products_producttags ON 
+                products_productdetails.id = products_producttags.product_id
+                WHERE products_productdetails.id={product_id} AND products_producttags.tag="{tag}";
+            """.format(
+                tag=book_tags[tag],
+                product_id=product_id
+            ))[0]
+            if not bool(details):
+                return redirect("/{}".format(tag))
+            else:
+                return render(request, "pages/product_description.html", {
+                    "details": details,
+                    "user_id": request.user.id
+                })
+        except KeyError:
+            return redirect("/{}".format(tag))

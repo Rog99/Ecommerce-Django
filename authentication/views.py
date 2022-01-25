@@ -60,13 +60,13 @@ class SellerPage(TemplateView):
         )
 
         try:
+            sell.save()
             if product_type == "BK":
                 tag = ProductTags(product=sell, tag=request.POST["book_type"])
                 tag.save()
-            sell.save()
             return redirect('/')
 
-        except:
+        except ValueError:
             messages.error(request, "Error in saving data to the database")
             return redirect('/sell')
 

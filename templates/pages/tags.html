@@ -13,7 +13,7 @@
     <h3 style="margin: 10px 0px 5px 0px">{{ card.product_name | truncatechars:20 }}</h3>
     <p class="price" style="margin: 5px 0px 10px 0px">₹ {{ card.price }}</p>
     <p style="margin: 5px; text-align: start">{{ card.description | truncatechars:100 }}</p>
-    <a class="mb-2">View Product</a>
+    <a class="mb-2" href="{{ card.id }}">View Product</a>
   </div>
 {% endfor %}
 </section>
