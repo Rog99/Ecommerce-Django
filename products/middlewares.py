@@ -9,7 +9,6 @@ def check_user_login(func):
         if request.user == AnonymousUser():
             messages.info(request, "User not logged in. Try logging in")
             return redirect('/signin')
-            pass
 
         else:
             response = func(request)

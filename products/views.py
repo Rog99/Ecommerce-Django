@@ -77,30 +77,30 @@ class BooksDescriptionPage(TemplateView):
     def get(self, request, tag, product_id):
         try:
             tag = tag.split('"')[0]
-            product_id = product_id.split('"')[0]
-            details = ProductDetails.objects.raw("""
-                SELECT 
-                products_productdetails.id AS id,
-                products_productdetails.description AS description,
-                products_productdetails.product_name,
-                products_productdetails.product_path,
-                products_productdetails.price,
-                products_productdetails.location,
-                products_productdetails.user_id
-                FROM products_productdetails
-                RIGHT JOIN products_producttags ON 
-                products_productdetails.id = products_producttags.product_id
-                WHERE products_productdetails.id={product_id} AND products_producttags.tag="{tag}";
-            """.format(
-                tag=book_tags[tag],
-                product_id=product_id
-            ))[0]
-            if not bool(details):
-                return redirect("/{}".format(tag))
-            else:
-                return render(request, "pages/product_description.html", {
-                    "details": details,
-                    "user_id": request.user.id
-                })
+            product_id = str(product_id).split('"')[0]
+
+            # query to get the product
+            book_details = ProductTags.objects\
+                .filter(product=product_id, tag=book_tags[tag])\
+                .select_related('product')\
+                .get()
+
+            details = {
+                "id": book_details.product.id,
+                "description": book_details.product.description,
+                "product_name": book_details.product.product_name,
+                "product_path": book_details.product.product_path,
+                "price": book_details.product.price,
+                "location": book_details.product.location,
+                "seller_id": book_details.product.user_id
+            }
+            return render(request, "pages/product_description.html", {
+                "details": details,
+                "user_id": request.user.id
+            })
+
+        except ProductTags.DoesNotExist:
+            return redirect("/{}".format(tag))
+
         except KeyError:
             return redirect("/{}".format(tag))

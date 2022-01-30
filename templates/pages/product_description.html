@@ -16,10 +16,14 @@
             <div class="mt-2 underline" style="text-decoration:underline; color:blue;">
                 {{ details.location }}
             </div>
-            {% if details.user_id == user_id %}
+            {% if details.seller_id == user_id %}
                 <button class="btn mt-4 btn-secondary" disabled>Talk to seller</button>
             {% else %}
-                <a class="btn btn-primary mt-4" href="/chat/{{ details.user_id }}">Talk to seller</a>
+            <form method="POST" action="/chat/request-room/">
+                {% csrf_token %}
+                <input value="{{ details.seller_id }}" name="seller_id" style="display:none"/>
+                <button type="submit" class="btn btn-primary mt-4">Talk to seller</button>
+            </form>
             {% endif %}
         </section>
     </div>

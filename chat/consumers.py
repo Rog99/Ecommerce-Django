@@ -1,20 +1,29 @@
 import json
 from channels.generic.websocket import AsyncWebsocketConsumer
+from .models import Connections
+from asgiref.sync import sync_to_async
 
 
 class ChatConsumer(AsyncWebsocketConsumer):
     async def connect(self):
-        self.room_name = self.scope['url_route']['kwargs']['room_name']
-        self.room_group_name = 'chat_%s' % self.room_name
+        try:
+            self.room_name = self.scope['url_route']['kwargs']['room_name']
+            self.room_group_name = 'chat_%s' % self.room_name
+            connection = await sync_to_async(Connections.objects.get, thread_sensitive=True)(room_id=self.room_name)
+            print(self.scope)
 
-        # print(self.scope["user"].id)
+            # Join room group
+            await self.channel_layer.group_add(
+                self.room_group_name,
+                self.channel_name
+            )
+            await self.accept()
 
-        # Join room group
-        await self.channel_layer.group_add(
-            self.room_group_name,
-            self.channel_name
-        )
-        await self.accept()
+        except Connections.DoesNotExist:
+            await self.channel_layer.group_discard(
+                self.room_group_name,
+                self.channel_name
+            )
 
     async def disconnect(self, close_code):
         await self.channel_layer.group_discard(

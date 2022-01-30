@@ -36,7 +36,9 @@ class ProductTags(models.Model):
         ('CB', 'College Level Books'),
         ('NO', 'Novels')
     ]
-    product = models.ForeignKey('ProductDetails', on_delete=models.SET_NULL, blank=True, null=True)
+    product = models.ForeignKey(
+        'ProductDetails', on_delete=models.SET_NULL, blank=True, null=True, related_name='get_product'
+    )
     tag = models.CharField(max_length=2, null=False, blank=False, choices=TAGS)
 
     #returns a RawQuesrySet instance based on the book tag
