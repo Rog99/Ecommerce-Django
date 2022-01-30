@@ -8,7 +8,6 @@ const chatSocket = new WebSocket(
     + '/'
 );
 
-const messages = [];
 
 chatSocket.onmessage = function(e) {
     const data = JSON.parse(e.data);

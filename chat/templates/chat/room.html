@@ -7,9 +7,9 @@
     <link rel="stylesheet" href="{% static 'styles/room.css' %}"/>
 </head>
 <body>
-    <div id="chat-log" cols="100" rows="20">
-        <div class="sender">Hey Vishnu</div>
-        <div class="receiver">Hello How you doing ?</div>
+    <div id="chat-log">
+<!--        <div class="sender">Hey Vishnu</div>-->
+<!--        <div class="receiver">Hello How you doing ?</div>-->
     </div>
     <div id="input-elements">
         <input id="chat-message-input" type="text"><br>
@@ -17,5 +17,9 @@
     </div>
     {{ room_name|json_script:"room-name" }}
 <!--    <script src="{% static 'scripts/room.js' %}"></script>-->
+    <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script type="text/babel" src="{% static 'scripts/room_react.js' %}"></script>
 </body>
 </html>
