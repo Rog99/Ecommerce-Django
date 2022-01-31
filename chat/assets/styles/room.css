@@ -5,7 +5,7 @@ body{
 :root{
     --window-width: 100vw;
 }
-#chat-log > div{
+#chat-log{
     height: 90vh;
     overflow-y: scroll;
     width: var(--window-width);
@@ -13,14 +13,14 @@ body{
     flex-direction: column;
 }
 
-#chat-log > div > div{
+#chat-log > div{
     width: fit-content;
     padding: 10px;
     max-width: 70%;
     margin-top: 5px;
 }
 
-#chat-log > div> div.receiver{
+#chat-log > div.receiver{
     align-self: end;
     background: purple;
     color: #fff;
@@ -28,7 +28,7 @@ body{
     margin-right: 0.3rem;
 }
 
-#chat-log > div > div.sender{
+#chat-log > div.sender{
     align-self: start;
     background: magenta;
     color: #fff;
