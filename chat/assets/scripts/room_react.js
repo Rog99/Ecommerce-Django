@@ -30,6 +30,7 @@ function ChatBox(){
 
         chatSocket.onclose = function(e){
             console.error('Chat socket closed unexpectedly');
+            window.location.replace(`http://${window.location.host}/`);
         }
     }, [chatSocket])
 
