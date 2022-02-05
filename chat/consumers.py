@@ -7,10 +7,6 @@ from authentication.models import CustomUser
 
 
 class ChatConsumer(AsyncWebsocketConsumer):
-    def __init__(self):
-        self.room_name = ""
-        self.room_group_name = ""
-
     async def connect(self):
         try:
             self.room_name = self.scope['url_route']['kwargs']['room_name']

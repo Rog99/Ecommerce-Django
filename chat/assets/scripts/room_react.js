@@ -7,12 +7,7 @@ function ChatMessages({props}){
 }
 
 function ChatBox(){
-    const [messages, setMessages] = React.useState([
-        {type: 'sender', message: 'Hey Vishnu'},
-        {type: 'receiver', message: 'Hi seller'},
-        {type: 'sender', message: 'Can I get som more info on the product'},
-        {type: 'receiver', message: 'Sure :-)'}
-    ]);
+    const [messages, setMessages] = React.useState([]);
 
     const textMessage = React.useRef(null);
     const buttonElement = React.useRef(null);
@@ -30,7 +25,6 @@ function ChatBox(){
 
         chatSocket.onclose = function(e){
             console.error('Chat socket closed unexpectedly');
-            window.location.replace(`http://${window.location.host}/`);
         }
     }, [chatSocket])
 
