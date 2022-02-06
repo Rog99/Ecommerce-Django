@@ -1,13 +1,14 @@
 'use strict';
 
-function ChatMessages({props}){
+function ChatMessages({type, message}){
     return (
-        <div className={props.type}>{props.message}</div>
+        <div className={type}>{message}</div>
     )
 }
 
 function ChatBox(){
     const [messages, setMessages] = React.useState([]);
+    const [userId, setUserId] = React.useState(0);
 
     const textMessage = React.useRef(null);
     const buttonElement = React.useRef(null);
@@ -18,9 +19,21 @@ function ChatBox(){
     })
 
     React.useEffect(() => {
+        console.log(userId, messages)
+    }, [messages, userId])
+
+    React.useEffect(() => {
+        console.log('data')
+        fetch('http://'+ window.location.host +'/get-user')
+        .then(res => res.json())
+        .then(data => setUserId(data.user_id))
+        .catch(err => console.log(err))
+    }, [userId])
+
+    React.useEffect(() => {
         chatSocket.onmessage = function(e){
             let data = JSON.parse(e.data);
-            setMessages((message) => [...message, {type: 'receiver', message: data.message}]);
+            setMessages((message) => [...message, data]);
         }
 
         chatSocket.onclose = function(e){
@@ -47,7 +60,7 @@ function ChatBox(){
     return (
     <div>
         <div id="chat-log">
-            {messages.map(text => <ChatMessages props={text}/>)}
+            {messages.map(text => <ChatMessages message={text.message} type={userId==text.user_id ? 'receiver': 'sender'}/>)}
         </div>
         <div id="input-elements">
             <input id="chat-message-input" type="text" ref={textMessage} onKeyUp={handleKey}/>

@@ -9,7 +9,9 @@ from products.middlewares import check_user_login
 from products.models import ProductDetails, ProductTags
 import time
 from django.core.files.storage import FileSystemStorage
+from django.http import HttpResponse
 from random import random
+import json
 
 # Create your views here.
 
@@ -130,3 +132,13 @@ class LoginPage(TemplateView):
 def logout_view(request):
     logout(request)
     return redirect("/signin")
+
+
+def get_user(request):
+    # try:
+    json_object = json.dumps({"user_id": request.user.id}, indent=4).encode('utf-8')
+    print(json_object)
+    return HttpResponse(json_object, content_type='application/json')
+
+    # except TypeError:
+    #     return redirect('/signin')

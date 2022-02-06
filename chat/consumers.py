@@ -7,6 +7,11 @@ from authentication.models import CustomUser
 
 
 class ChatConsumer(AsyncWebsocketConsumer):
+    def __init__(self):
+        super().__init__()
+        self.room_name = ""
+        self.room_group_name = ""
+
     async def connect(self):
         try:
             self.room_name = self.scope['url_route']['kwargs']['room_name']
@@ -16,6 +21,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
                 raise CustomUser.DoesNotExist('User does not exist')
 
             connection = await sync_to_async(Connections.objects.get, thread_sensitive=True)(room_id=self.room_name)
+            print(self.scope['user'].id)
 
             # Join room group
             await self.channel_layer.group_add(
@@ -52,15 +58,18 @@ class ChatConsumer(AsyncWebsocketConsumer):
             self.room_group_name,
             {
                 'type': 'chat_message',
-                'message': message
+                'message': message,
+                'user_id': self.scope['user'].id
             }
         )
 
     async def chat_message(self, event):
         message = event['message']
+        user_id = event['user_id']
         print("chat_message " + message)
 
         # Send message to WebSocket
         await self.send(text_data=json.dumps({
-            'message': message
+            'message': message,
+            'user_id': user_id
         }))

@@ -27,22 +27,20 @@ class RequestRoom(TemplateView):
     def post(self, request):
         seller_id = request.POST["seller_id"]
         seller = CustomUser.objects.get(id=seller_id)
-        # try:
-        bool_connect = Connections.objects.filter(
-            (Q(user=request.user) | Q(user=seller)) & (Q(friend=request.user) | Q(friend=seller))
-        ).get()
-        print("line 34")
-        print(bool_connect.room_id)
+        try:
+            bool_connect = Connections.objects.filter(
+                (Q(user=request.user) | Q(user=seller)) & (Q(friend=request.user) | Q(friend=seller))
+            ).get()
 
-        return redirect('/chat/' + bool_connect.room_id)
+            return redirect('/chat/' + bool_connect.room_id)
 
-        # except Connections.DoesNotExist:
-        #     # check if the connections exists in the database
-        #     room_id = uuid.uuid4().hex
-        #     connection = Connections(
-        #         room_id=room_id,
-        #         user=request.user,
-        #         friend=seller
-        #     )
-        #     connection.save()
-        #     return redirect('/')
+        except Connections.DoesNotExist:
+            # check if the connections exists in the database
+            room_id = uuid.uuid4().hex
+            connection = Connections(
+                room_id=room_id,
+                user=request.user,
+                friend=seller
+            )
+            connection.save()
+            return redirect('/')

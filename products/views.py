@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views.generic import TemplateView
 from .models import ProductTags, ProductDetails
+from authentication.models import CustomUser
 
 # Create your views here.
 products_routes = {
@@ -104,3 +105,14 @@ class BooksDescriptionPage(TemplateView):
 
         except KeyError:
             return redirect("/{}".format(tag))
+
+
+class ManageProducts(TemplateView):
+    def get(self, request):
+        # user = CustomUser.objects.filter(id=request.user.id).get()
+        # print(user)
+        products = ProductDetails.objects.filter(user=request.user).values()
+        print(products)
+        return render(request, 'pages/manage_products.html', {
+            'products': products
+        })
