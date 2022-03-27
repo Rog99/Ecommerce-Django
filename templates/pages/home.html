@@ -1,6 +1,8 @@
 {% extends '../index.html' %}
 
 {% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'styles/home.css'%}" />
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container-fluid">
     <a class="navbar-brand" href="#">Steal&Deal</a>
@@ -58,13 +60,25 @@
         {% endif %}
       </ul>
 
-      <form class="d-flex">
+      <!-- <form class="d-flex">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
         <button class="btn btn-outline-success" type="submit">Search</button>
-      </form>
+      </form> -->
     </div>
   </div>
 </nav>
+
+    {% if messages %}
+    {% for message in messages %}
+
+    <div class="notification">
+      <div class="notification-text">{{ message }}</div>
+      <div class="progress-bar"></div>
+    </div>
+
+    {% endfor %}
+    {% endif %}
+
   <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-indicators">
       <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active"
@@ -75,14 +89,14 @@
         aria-label="Slide 3"></button>
     </div>
     <div class="carousel-inner">
-      <div class="carousel-item active">
-        <img src="https://source.unsplash.com/1000x400/?Sports equipments" class="d-block w-100" alt="...">
+      <div class="carousel-item active" style="position: relative;">
+        <div class="carousel-image-container"><img src="https://source.unsplash.com/1000x400/?Sports equipments" class="d-block w-100 carousel-image" alt="..."></div>
         <div class="carousel-caption d-none d-md-block">
           <h5>Sports equipments</h5>
 
         </div>
-        <div class="container">
-
+        <div class="carousel-center-logo">
+          Steal&Deal
         </div>
       </div>
       <div class="carousel-item">
@@ -134,4 +148,14 @@
         <div class="Banner">
         </div>
       </section>
+
+
+    <!-- {% if messages %} -->
+    <!-- <ul class="messages">
+        {% for message in messages %}
+        <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul> -->
+
+    <!-- {% endif %} -->
 {% endblock %}

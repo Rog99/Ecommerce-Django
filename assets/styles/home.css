@@ -1,0 +1,64 @@
+.carousel-image{
+    opacity: 0.3;
+}
+
+.carousel-image-container{
+    background-color: #000;
+}
+
+.carousel-center-logo{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff;
+    font-size: 10rem;
+}
+
+.notification{
+    position: absolute;
+    z-index: 500;
+    bottom: 0%;
+    right: 0%;
+    width: 20rem;
+    color: #000;
+    background-color: #efefef;
+    margin: 0px 10px 10px 0px;
+    border-radius: 5px;
+    border: 2px solid #000;
+    overflow: hidden;
+    cursor: pointer;
+    animation: hide-notification 1s;
+    animation-delay: 4s;
+    animation-fill-mode: forwards;
+}
+
+.notification > .progress-bar {
+    height: 5px;
+    background: green;
+    animation: progress-bar 4s;
+    animation-fill-mode: forwards;
+}
+
+.notification > .notification-text {
+    padding: 1.5rem 5px 1.5rem 5px;
+}
+
+@keyframes progress-bar {
+    0%{
+        width: 100%;
+    }
+    100%{
+        width: 0%;
+    }
+}
+
+@keyframes hide-notification {
+    0%{
+        transform: translateX(0%);
+    }
+
+    100%{
+        transform: translateX(150%);
+    }
+}

@@ -66,6 +66,9 @@ class SellerPage(TemplateView):
             if product_type == "BK":
                 tag = ProductTags(product=sell, tag=request.POST["book_type"])
                 tag.save()
+
+            print(sell.id)
+            messages.info(request, "Product uploaded successfully")
             return redirect('/')
 
         except ValueError:
