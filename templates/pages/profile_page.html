@@ -15,7 +15,13 @@
     </div>
     <div class="input_box">
         <label for="phone_number">Phone Number :</label>
-        <input name="phone_number" id="phone_number" value="{{ user.phone_number }}" />
+        {% if user.is_verified %}
+            <input name="phone_number" id="phone_number" value="{{ user.phone_number }}" />
+        {% endif %}
+
+        {% if not user.is_verified %}
+            <input name="phone_number" id="phone_number" value="{{ user.phone_number }}" style="border: 2px solid red;"/>
+        {% endif %}
     </div>
 
 </div>
