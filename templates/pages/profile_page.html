@@ -1,0 +1,22 @@
+{% extends '../index.html' %}
+
+{% block content %}
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'styles/profile_page.css' %}"/>
+<div>
+    <div class="input_box">
+        <label for="first_name">First Name :</label>
+        <input name="first_name" id="first_name" value="{{ user.full_name }}" />
+    </div>
+    <div class="input_box">
+        <label for="email">Email :</label>
+        <input name="email" id="email" value="{{ user.email }}" />
+    </div>
+    <div class="input_box">
+        <label for="phone_number">Phone Number :</label>
+        <input name="phone_number" id="phone_number" value="{{ user.phone_number }}" />
+    </div>
+
+</div>
+{% endblock %}

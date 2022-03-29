@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from django.views.generic import TemplateView
 from .models import ProductTags, ProductDetails
 from authentication.models import CustomUser
+from django.contrib.auth.tokens import PasswordResetTokenGenerator
+import six
 
 # Create your views here.
 products_routes = {

@@ -11,9 +11,15 @@ import time
 from django.core.files.storage import FileSystemStorage
 from django.http import HttpResponse
 from random import random
+from datetime import datetime
+from django.views import View
 import json
 
 # Create your views here.
+
+
+def generate_key(key):
+    return str(key) + str(datetime.date(datetime.now())) + "CPGVXNY5LW5M6ZPV7ICRP7RRY5XL2EPD"
 
 
 class Index(TemplateView):
@@ -85,8 +91,7 @@ class SignUpPage(TemplateView):
             data = request.POST
             user = CustomUser(
                 email=data["email"],
-                full_name=data["full_name"],
-                phone_number=data["phone_number"]
+                full_name=data["full_name"]
             )
             user.set_password(data["password"])
             try:
@@ -132,16 +137,29 @@ class LoginPage(TemplateView):
             return redirect('/signin')
 
 
+class ProfilePage(TemplateView):
+    def get(self, request):
+        return render(request, 'pages/profile_page.html', {"user": request.user})
+
+
 def logout_view(request):
     logout(request)
     return redirect("/signin")
 
 
 def get_user(request):
-    # try:
     json_object = json.dumps({"user_id": request.user.id}, indent=4).encode('utf-8')
     print(json_object)
     return HttpResponse(json_object, content_type='application/json')
 
-    # except TypeError:
-    #     return redirect('/signin')
+
+class EmailVerification(View):
+
+    def post(self, request):
+        pass
+
+
+class PhoneNumberVerification(TemplateView):
+
+    def get(self, request):
+        return render(request, 'pages/phone_verification.html')
